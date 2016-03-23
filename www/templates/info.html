@@ -1,0 +1,33 @@
+﻿<style>
+    .fixed-bottom-right{
+        position: fixed;
+        bottom: 1%;
+        right: 2.5%;
+    }
+    .fixed-center{
+        position: relative;
+        top: 45%;
+        left: auto;
+        right: auto;
+        text-align: center;
+    }
+    .button-edit{
+        font-size: 2em;
+    }
+</style>
+<ion-view view-title="Bike Info">
+    <ion-content>
+        
+
+        <h2 ng-if="noInfoFound!==null"
+            class="fixed-center"
+            style="color: darkgrey">
+            {{noInfoFound}}
+        </h2>
+
+        <label class="fixed-bottom-right button-edit"
+                ui-sref="app.editInfo">
+            <i class="ion-edit"></i>
+        </label>
+    </ion-content>
+</ion-view>
