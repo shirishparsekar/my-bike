@@ -101,11 +101,16 @@ angular.module('starter.controllers', [])
         $scope.records[$scope.recordIndex].rate = rate;
 
         setCache();
-
         $scope.popover.remove($event);
         $scope.recordIndex = -1;
     }
 
+    $scope.deleteRecord = function (index) {
+        $scope.records.splice(index, 1);
+        setCache();
+        $location.hash('scrollElement');
+        $anchorScroll();
+    }
 
     //Cleanup the popover when we're done with it!
     $scope.$on('$destroy', function () {
@@ -169,24 +174,24 @@ angular.module('starter.controllers', [])
 
 .controller('EditInfoCtrl', function ($scope, localStorageService) {
     var records = localStorageService.get("mywheels_bikeinfo");
-    $scope.data = [];
+    //$scope.data = [];
 
-    if (records === null) {
-        records = [];
-    }
+    //if (records === null) {
+    //    records = [];
+    //}
 
-    for (var i = 0; i < records.length - 1; i++) {
-        var distance = records[i + 1].meter - records[i].meter;
-        var petrolInLiter = records[i].petrol / records[i].rate;
+    //for (var i = 0; i < records.length - 1; i++) {
+    //    var distance = records[i + 1].meter - records[i].meter;
+    //    var petrolInLiter = records[i].petrol / records[i].rate;
 
-        $scope.data.push({
-            "petrol": petrolInLiter,
-            "distance": distance,
-            "mileage": distance / petrolInLiter
-        });
+    //    $scope.data.push({
+    //        "petrol": petrolInLiter,
+    //        "distance": distance,
+    //        "mileage": distance / petrolInLiter
+    //    });
 
-        console.log($scope.data);
+    //    console.log($scope.data);
 
-    }
+    //}
 });
 
