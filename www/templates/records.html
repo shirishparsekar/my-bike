@@ -9,7 +9,7 @@
     </style>
     <ion-content>
 
-        <ion-list id="recordList" style="width: 100%; position:fixed; overflow: scroll; height: 520px" ng-style="listHeight">
+        <ion-list id="recordList" style="width: 98%; position:fixed; overflow: scroll; height: 520px" ng-style="listHeight">
             <ion-item  ng-repeat="record in records">
                 <div class="row" ng-click="editField($event, $index, record.petrol, record.meter,record.rate)">
                     <div class="col col-10" ng-click="updateRecord($index)">
@@ -25,7 +25,7 @@
 
             </ion-item>
             <div id="scrollElement"></div>
-            <script id="popover" type="text/ng-template" style="width: 100%">
+            <script id="popover" type="text/ng-template">
                 <ion-popover-view style="width:80%">
                     <ion-header-bar>
                         <h1 class="title">Edit record</h1>
