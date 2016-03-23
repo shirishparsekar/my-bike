@@ -4,8 +4,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'LocalStorageModule']
 .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
         if (window.cordova && window.cordova.plugins.Keyboard) {
-            //cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            //cordova.plugins.Keyboard.disableScroll(true);
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
 
         }
         if (window.StatusBar) {
@@ -43,7 +43,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'LocalStorageModule']
                 controller: 'AnalyticsCtrl'
             }
         }
-    });
+    })
+
+    .state('app.bikeinfo', {
+        url: '/info',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/info.html',
+                controller: 'InfoCtrl'
+            }
+        }
+    })
+
+    .state('app.editInfo', {
+        url: '/info/edit',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/editInfo.html',
+                controller: 'EditInfoCtrl'
+            }
+        }
+    })
+
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/records');
 });

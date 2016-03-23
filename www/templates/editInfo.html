@@ -1,0 +1,31 @@
+﻿<style>
+   .fixed-bottom-right{
+        position: fixed;
+        bottom: 1%;
+        right: 2.5%;
+    }
+    .fixed-bottom-left{
+        position: fixed;
+        bottom: 1%;
+        left: 2.5%;
+    }
+    .button-save{
+        color: green;
+    }
+    .btn{
+        font-size: 2em;
+    }
+</style>
+<ion-view view-title="Edit Bike Info">
+    <ion-content>
+
+        <label class="fixed-bottom-left btn"
+               ui-sref="app.editInfo">
+            <i class="ion-arrow-left-c"></i>
+        </label>
+        <label class="fixed-bottom-right button-save btn"
+               ui-sref="app.editInfo">
+            <i class="ion-android-checkmark-circle"></i>
+        </label>
+    </ion-content>
+</ion-view>

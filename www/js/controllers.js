@@ -10,35 +10,35 @@ angular.module('starter.controllers', [])
     //});
     
     // Form data for the login modal
-    $scope.loginData = {};
+    //$scope.loginData = {};
 
     // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-        scope: $scope
-    }).then(function (modal) {
-        $scope.modal = modal;
-    });
+    //$ionicModal.fromTemplateUrl('templates/login.html', {
+    //    scope: $scope
+    //}).then(function (modal) {
+    //    $scope.modal = modal;
+    //});
 
     // Triggered in the login modal to close it
-    $scope.closeLogin = function () {
-        $scope.modal.hide();
-    };
+    //$scope.closeLogin = function () {
+    //    $scope.modal.hide();
+    //};
 
     // Open the login modal
-    $scope.login = function () {
-        $scope.modal.show();
-    };
+    //$scope.login = function () {
+    //    $scope.modal.show();
+    //};
 
     // Perform the login action when the user submits the login form
-    $scope.doLogin = function () {
-        console.log('Doing login', $scope.loginData);
+    //$scope.doLogin = function () {
+    //    console.log('Doing login', $scope.loginData);
 
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
-        $timeout(function () {
-            $scope.closeLogin();
-        }, 1000);
-    };
+    //    // Simulate a login delay. Remove this and replace with your login
+    //    // code if using a login system
+    //    $timeout(function () {
+    //        $scope.closeLogin();
+    //    }, 1000);
+    //};
 })
 
 .controller('RecordsCtrl', function ($scope, localStorageService, $location, $anchorScroll, $ionicPopover) {
@@ -151,4 +151,42 @@ angular.module('starter.controllers', [])
         console.log($scope.data);
 
     }
+})
+
+.controller('InfoCtrl', function ($scope, localStorageService) {
+    var data = localStorageService.get("mywheels_bikeinfo");
+
+    if (data === null) {
+        $scope.bikeInfo = [];
+        $scope.noInfoFound = "No information yet stored";
+    }
+    else {
+        $scope.bikeInfo = data;
+        $scope.noInfoFound = null;
+    }
+
+})
+
+.controller('EditInfoCtrl', function ($scope, localStorageService) {
+    var records = localStorageService.get("mywheels_bikeinfo");
+    $scope.data = [];
+
+    if (records === null) {
+        records = [];
+    }
+
+    for (var i = 0; i < records.length - 1; i++) {
+        var distance = records[i + 1].meter - records[i].meter;
+        var petrolInLiter = records[i].petrol / records[i].rate;
+
+        $scope.data.push({
+            "petrol": petrolInLiter,
+            "distance": distance,
+            "mileage": distance / petrolInLiter
+        });
+
+        console.log($scope.data);
+
+    }
 });
+
