@@ -1,6 +1,17 @@
+<style>
+     .fixed-center{
+        position: relative;
+        top: 45%;
+        left: auto;
+        right: auto;
+        text-align: center;
+    }
+</style>
+
 <ion-view view-title="Analytics">
     <ion-content>
         <h2 ng-if="data.length===0" 
+            class="fixed-center"
             style="text-align: center; color: darkgrey">No data has been recorded</h2>
         <ion-list>
             <ion-item ng-repeat="entry in data">
