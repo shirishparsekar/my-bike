@@ -17,13 +17,18 @@
 </style>
 <ion-view view-title="Bike Info">
     <ion-content>
-        
-
+      
         <h2 ng-if="noInfoFound!==null"
             class="fixed-center"
             style="color: darkgrey">
             {{noInfoFound}}
         </h2>
+
+        <div class="row" ng-repeat="record in bikeInfo">
+            <div class="col col-10"></div>
+            <div class="col col-45"></div>
+            <div class="col col-45"></div>
+        </div>
 
         <label class="fixed-bottom-right button-edit"
                 ui-sref="app.editInfo">

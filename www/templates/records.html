@@ -1,70 +1,114 @@
-<ion-view view-title="Bike Petrol Expenditure">
+<ion-view view-title="Petrol Expense Data">
     <style>
-        input{
+        input {
             text-align: right;
         }
-        #inputBox>label{
-            background-color: rgba(220, 220, 220, 0.14);
+
+        #inputBox {
+            width: 100%;
+            z-index: 100;
+            position: fixed;
+            bottom: -10px;
+            border-radius: 15px;
+            box-shadow: 0 -5px 10px #808080;
+        }
+
+        .input-label {
+            font-weight: 800;
+        }
+
+        #inputBox > label {
+        }
+
+        #recordList {
+            z-index: -1;
+            width: 100%;
+            position: fixed;
+            overflow: scroll;
+            margin-right: auto;
+            margin-left: auto;
+            border-radius: 10px;
+        }
+
+        #inputTitle {
+            height: 20px;
+            margin-bottom: 0;
+            border-bottom: 1px solid #cbcaca;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .record-unit{
+            color: grey;
+        }
+        .record-text{
+            color: black;
+            font-weight: 700
+        }
+        .record-edit{
+            background-color: #e4e9ee;
+        }
+        .input-edit-title{
+            background-color: orange;
+            color: white;
+        }
+        .input-new-title{
+            
+            color: #626161;
+            background-color: rgba(199, 199, 199, 0.51);
+        }
+        ::-webkit-scrollbar,
+        *::-webkit-scrollbar {
+            display: none;
         }
     </style>
     <ion-content>
 
-        <ion-list id="recordList" style="width: 98%; position:fixed; overflow: scroll; height: 520px" ng-style="listHeight">
-            <ion-item  ng-repeat="record in records">
-                <div class="row" ng-click="editField($event, $index, record.petrol, record.meter,record.rate)">
-                    <div class="col col-10" ng-click="updateRecord($index)">
-                        <i class="icon ion-ios-checkmark-outline" 
+        <ion-list id="recordList" ng-style="listHeight">
+            <ion-item ng-repeat="record in records" 
+                      style="height:50px; padding-top: 5px; border-color: #e9e8e8"
+                      ng-class="{'record-edit':editableField===$index}">
+                <div class="row record-text" 
+                     ng-click="editField($event, $index, record.petrol, record.meter,record.rate)"
+                     style="font-size: small;">
+                    <div class="col col-10" ng-show="editableField===$index">
+                        <i class="icon ion-ios-undo"
                            style="font-size:x-large; color:blue"
-                           ng-show="editableField===$index"></i>
+                           ></i>
                     </div>
-                    <div class="col col-10">#{{$index+1}}</div>
-                    <div class="col col-30">{{record.petrol}}Rs</div>
-                    <div class="col col-30">{{record.meter}}Km</div>
-                    <div class="col col-20">{{record.rate}}Rs/Lt</div>
+                    <div class="col col-20" style="text-align: center"><span class="record-unit">#{{$index+1}}</span></div>
+                    <div class="col col-30">{{record.petrol}} <span class="record-unit"> Rs</span></div>
+                    <div class="col col-30">{{record.meter}} <span class="record-unit"> Km</span></div>
+                    <div class="col col-30">{{record.rate}} <span class="record-unit"> Rs/Lt</span></div>
                 </div>
 
             </ion-item>
             <div id="scrollElement"></div>
-            <script id="popover" type="text/ng-template">
-                <ion-popover-view style="width:80%">
-                    <ion-header-bar>
-                        <h1 class="title">Edit record</h1>
-                    </ion-header-bar>
-                    <ion-content>
-                        <div class="list" style="width: 100%; z-index: 100; position: fixed; bottom: 0">
-                            <label class="item item-input">
-                                <input type="number" placeholder="Petrol in Rs" ng-model="petrolEdit"><span class="input-label">Rs</span>
-                            </label>
-                            <label class="item item-input">
-                                <input type="number" placeholder="Meter reading" ng-model="meterEdit"><span class="input-label">Km</span>
-                            </label>
-                            <label class="item item-input">
-                                <input type="number" placeholder="Current petrol rate" ng-model="rateEdit"><span class="input-label">Rs/Lt</span>
-                            </label>
-                            <button class="button button-full button-assertive" ng-click="updateRecord($event, petrolEdit, meterEdit, rateEdit)">
-                                save
-                            </button>
-                        </div>
-                    </ion-content>
-                </ion-popover-view>
-            </script>
         </ion-list>
-        <div id="inputBox" class="list" style="width: 100%; z-index: 100; position: fixed; bottom: 0; box-shadow: 0px -2px 10px #888888; ">
+        <div id="inputBox" class="list">
+            <p class="text-center" 
+               id="inputTitle"
+               ng-class="input_edit_record ? 'input-edit-title' : 'input-new-title'">{{inputTitle}}</p>
             <label class="item item-input">
-                <input type="number" placeholder="Petrol in Rs" ng-model="petrol"><span class="input-label">Rs</span>
+                <input type="number" placeholder="Petrol in Rs" data-ng-model="petrol"><span class="input-label">Rs</span>
             </label>
             <label class="item item-input">
-                <input type="number" placeholder="Meter reading" ng-model="meter"><span class="input-label">Km</span>
+                <input type="number" placeholder="Meter reading" data-ng-model="meter"><span class="input-label">Km</span>
             </label>
             <label class="item item-input">
-                <input type="number" placeholder="Current petrol rate" ng-model="rate"><span class="input-label">Rs/Lt</span>
+                <input type="number" placeholder="Current petrol rate" data-ng-model="rate"><span class="input-label">Rs/Lt</span>
             </label>
 
-            <button class="button button-full button-dark" ng-click="newRecord(petrol, meter, rate)">
+            <button class="button button-full button-positive" 
+                    ng-click="newRecord(petrol, meter, rate)"
+                    ng-if="!input_edit_record">
                 Done
+            </button>
+            <button class="button button-full button-balanced" 
+                    ng-click="updateRecord($event, petrol, meter, rate)"
+                    ng-if="input_edit_record">
+                Save
             </button>
         </div>
     </ion-content>
 
 </ion-view>
-

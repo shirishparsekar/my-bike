@@ -1,36 +1,72 @@
 <style>
-     .fixed-center{
+    .fixed-center {
         position: relative;
         top: 45%;
         left: auto;
         right: auto;
         text-align: center;
     }
+
+    ion-footer-bar {
+        height: 30%;
+        max-height: 200px;
+    }
+
+    #listHeader {
+        background-color: #f5f2f2;
+        color: #6c6c6c;
+        height: 30px;
+        line-height: 10px;
+        /*position: fixed;
+        top: 0;*/
+    }
+    #listHeader>div{
+        //border: 1px solid red
+    }
 </style>
 
 <ion-view view-title="Analytics">
-    <ion-content>
-        <h2 ng-if="data.length===0" 
+    <ion-content class="has-header has-footer">
+        <h2 ng-if="data.length===0"
             class="fixed-center"
-            style="text-align: center; color: darkgrey">No data has been recorded</h2>
-        <ion-list>
-            <ion-item ng-repeat="entry in data">
-                <div class="row">
-                    <div class="col col-10">
-                        <h6>#{{$index+1}}</h6>
+            style="text-align: center; color: darkgrey">
+            No data has been recorded
+        </h2>
+        <div id="listHeader" class="row">
+            <div class="col col-10">#</div>
+            <div class="col col-25">pertrol(Lt)</div>
+            <div class="col col-27">distance(Km)</div>
+            <div class="col col-35">mileage(Km/Lt)</div>
+        </div>
+        <ion-scroll direction="y" ng-style="listScrollHeight">
+            <ion-list >
+                <ion-item ng-repeat="entry in data" style="height: 60px; padding-top: 10px">
+                    <div class="row">
+                        <div class="col col-10">
+                            <p>{{$index+1}}</p>
+                        </div>
+                        <div class="col col-30">
+                            <p>{{entry.petrol | number:3}} Lt</p>
+                        </div>
+                        <div class="col col-30">
+                            <p>{{entry.distance}} Km</p>
+                        </div>
+                        <div class="col col-30">
+                            <p>{{entry.mileage | number:2}} Km/Lt</p>
+                        </div>
                     </div>
-                    <div class="col col-30">
-                        <h4>{{entry.petrol | number:3}} Lt</h4>
-                    </div>
-                    <div class="col col-30">
-                        <h4>{{entry.distance}} Km</h4>
-                    </div>
-                    <div class="col col-30">
-                        <h4>{{entry.mileage | number:2}} Km/Lt</h4>
-                    </div>
-                </div>
-            </ion-item>
-        </ion-list>
-
+                </ion-item>
+            </ion-list>
+        </ion-scroll>
     </ion-content>
+    <ion-footer-bar id="footerAnalytics" class="bar-dark" style="height: 40%; max-height: 150px; min-height: 100px">
+        <div class="row">
+            <div class="col col-40 text-right">
+                <p style="color: white; font-size: x-large">Average : </p>
+            </div>
+            <div class="col col-60 text-left">
+                <p style="color: white; font-size: x-large">{{getAverage() | number:5}} Km/Lt</p>
+            </div>
+        </div>
+    </ion-footer-bar>
 </ion-view>
